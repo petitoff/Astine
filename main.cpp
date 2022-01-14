@@ -258,6 +258,12 @@ void f1vs1()
                     b[8] = 'X';
                     mov = 1;
                 }
+                x = fun(b);
+                if (x != 0)
+                {
+                    who_win = 1;
+                    break;
+                }
             }
             else
             {
@@ -323,6 +329,12 @@ void f1vs1()
                     dis(0, 9);
                     b[8] = 'O';
                     mov = 1;
+                }
+                x = fun(b);
+                if (x != 0)
+                {
+                    who_win = 2;
+                    break;
                 }
             }
         }
