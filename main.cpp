@@ -649,6 +649,6 @@ int main()
     }
 
     getch();
-    closegraph();
+    // closegraph();
     return 0;
 }
