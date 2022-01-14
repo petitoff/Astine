@@ -147,6 +147,30 @@ void menu()
     cleardevice();
 }
 
+int fun(char *a)
+{
+    // return || 0 for no result || 1 for player 1 || 2 for player 2
+
+    //diagonal check
+    if ((a[0] == a[4] && a[0] == a[8] && a[0] == 'X') || (a[2] == a[4] && a[2] == a[6] && a[2] == 'X'))
+        return 1;
+    else if ((a[0] == a[4] && a[0] == a[8] && a[0] == 'O') || (a[2] == a[4] && a[2] == a[6] && a[2] == 'O'))
+        return 2;
+
+    // horizontal check
+    if ((a[0] == a[1] && a[1] == a[2] && a[0] == 'X') || (a[3] == a[4] && a[4] == a[5] && a[3] == 'X') || (a[6] == a[7] && a[7] == a[8] && a[6] == 'X'))
+        return 1;
+    else if ((a[0] == a[1] && a[1] == a[2] && a[0] == 'O') || (a[3] == a[4] && a[4] == a[5] && a[3] == 'O') || (a[6] == a[7] && a[7] == a[8] && a[6] == 'O'))
+        return 2;
+
+    //vertical check
+    if ((a[0] == a[3] && a[3] == a[6] && a[0] == 'X') || (a[1] == a[4] && a[4] == a[7] && a[1] == 'X') || (a[2] == a[5] && a[5] == a[8] && a[2] == 'X'))
+        return 1;
+    if ((a[0] == a[3] && a[3] == a[6] && a[0] == 'O') || (a[1] == a[4] && a[4] == a[7] && a[1] == 'O') || (a[2] == a[5] && a[5] == a[8] && a[2] == 'O'))
+        return 2;
+    return 0;
+}
+
 void f1vs1()
 {
     design();
