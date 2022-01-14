@@ -173,6 +173,8 @@ int fun(char *a)
 
 void f1vs1()
 {
+    int who_win{0};
+
     design();
     int x = 0;
     POINT pos;
