@@ -116,7 +116,7 @@ void menu()
 {
     // Funkcja odpowiedzialna za menu wyboru w grze.
 
-    readimagefile("menu.jpg", 0, 0, 400, 600);
+    readimagefile("assets\\menu.jpg", 0, 0, 400, 600);
 
     POINT pos;
     while (true)
