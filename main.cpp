@@ -156,9 +156,9 @@ void f1vs1()
     char b[9] = {0};
     for (int i = 0; i < 9; i++)
         b[i] = 0;
-    settextstyle(10, 0, 3);
-    int w = textwidth((char *)"Your Turn !!");
-    outtextxy((400 - w) / 2, 500, (char *)"Your Turn !!");
+    // settextstyle(10, 0, 3);
+    // int w = textwidth((char *)"Your Turn !!");
+    // outtextxy((400 - w) / 2, 500, (char *)"Your Turn !!");
 
     while (x == 0 && turn <= 9)
     {
