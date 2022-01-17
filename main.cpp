@@ -681,7 +681,7 @@ int main()
     initwindow(400, 600, "Kolko i Krzyzyk"); // inicjalizacja okna o wymiarach 400 x 600 i z podpisem okna "Kolko i Krzyzyk"
 
     menu();
-    delay(100);
+    delay(200);
     // design(); // funkcja odpowiedzialna za stworzenie wyglądu planszy
 
     while (true)
