@@ -362,6 +362,24 @@ void f1vs1()
         int w = textwidth((char *)"Remis");
         outtextxy((400 - w) / 2, 500, (char *)"Remis");
     }
+
+    settextstyle(10, 0, 3);
+    outtextxy(100, 550, (char *)"Jeszcze raz?");
+
+    while (true)
+    {
+        if (GetAsyncKeyState(VK_LBUTTON))
+        {
+            GetCursorPos(&pos);
+            long X = mousex();
+            long Y = mousey();
+            if (X > 100 && X < 294 && Y > 550 && Y < 586)
+            {
+                restart = 0;
+                break;
+            }
+        }
+    }
 }
 
 void computer(char *a, int turn)
