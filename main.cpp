@@ -116,11 +116,32 @@ void menu()
 {
     // Funkcja odpowiedzialna za menu wyboru w grze.
 
-    readimagefile("assets\\menu.jpg", 0, 0, 400, 600);
+    readimagefile("assets\\menuv1.jpg", 0, 0, 400, 600);
 
     POINT pos;
     while (true)
     {
+        GetCursorPos(&pos);
+        long X = mousex();
+        long Y = mousey();
+        if (X > 100 && X < 310 && Y > 225 && Y < 274)
+        {
+            readimagefile("assets\\menuv2.jpg", 0, 0, 400, 600);
+        }
+        else if (X > 100 && X < 310 && Y > 300 && Y < 343)
+        {
+            readimagefile("assets\\menuv3.jpg", 0, 0, 400, 600);
+        }
+
+        else if (X > 100 && X < 310 && Y > 369 && Y < 413)
+        {
+            readimagefile("assets\\menuv4.jpg", 0, 0, 400, 600);
+        }
+        else
+        {
+            readimagefile("assets\\menuv1.jpg", 0, 0, 400, 600);
+        }
+
         if (GetAsyncKeyState(VK_LBUTTON))
         {
             GetCursorPos(&pos);
