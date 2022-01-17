@@ -689,6 +689,11 @@ int main()
         if (choice_menu == 1)
         {
             f1vs1();
+            if (restart == 0)
+            {
+                cleardevice();
+                continue;
+            }
             break;
         }
         else if (choice_menu == 2)
