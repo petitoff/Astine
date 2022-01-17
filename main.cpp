@@ -188,6 +188,10 @@ void f1vs1()
 
     while (x == 0 && turn <= 9)
     {
+        if (turn == 9)
+        {
+            break;
+        }
         if (GetAsyncKeyState(VK_LBUTTON))
         {
             GetCursorPos(&pos);
