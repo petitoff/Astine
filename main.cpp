@@ -356,6 +356,12 @@ void f1vs1()
         int w = textwidth((char *)"Wygral O !!");
         outtextxy((400 - w) / 2, 500, (char *)"Wygral O !!");
     }
+    else if (who_win == 0)
+    {
+        settextstyle(10, 0, 3);
+        int w = textwidth((char *)"Remis");
+        outtextxy((400 - w) / 2, 500, (char *)"Remis");
+    }
 }
 
 void computer(char *a, int turn)
