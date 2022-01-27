@@ -171,7 +171,6 @@ void TicTacToe::keyPress(sf::Vector2f pos)
 	{
 		for (int i = 0; i < 9; i++)
 		{
-			std::cout << "Test1";
 			if (this->pieces[i].getGlobalBounds().contains(pos))
 			{
 				if (this->set[i] == 0)
