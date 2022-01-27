@@ -53,7 +53,7 @@ public:
 	bool loadBoard(int startPlayer);
 
 	void keyPress(sf::Vector2f pos);
-	// void keyPress_PC(sf::Vector2f pos);
+	void keyPress_PC();
 };
 
 bool TicTacToe::loadAssets()
@@ -209,9 +209,10 @@ void TicTacToe::keyPress(sf::Vector2f pos)
 	if (this->reset.getGlobalBounds().contains(pos))
 		this->loadBoard(this->cur == 1 ? 2 : 1);
 }
-// void TicTacToe::keyPress_PC(sf::Vector2f pos)
-// {
-// }
+void TicTacToe::keyPress_PC()
+{
+	this->pieces[0].setTexture(this->cur == 1 ? this->cross : this->circle);
+}
 
 int main()
 {
@@ -342,6 +343,7 @@ int main()
 				{
 					if (event.mouseButton.button == sf::Mouse::Button::Left)
 						Game.keyPress(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+					Game.keyPress_PC();
 				}
 			}
 		}
