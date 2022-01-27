@@ -10,6 +10,10 @@ Wykorzystująca bibliotekę:
 * [SFML](https://www.sfml-dev.org/)
 
 ### Funkcje
-Gra posiada trzy funkcję. Gra 1 vs 1, 1 vs PC, Multiplayer.
-- 1 vs 1: Gra na jednym komputerze w dwie osoby przeciwko sobie.
-- 1 vs PC: Gra przeciwko komputerowi.
+Gra posiada trzy funkcje rozgrywki.
+- 1 vs 1 <br/>
+Gra na jednym komputerze przeciwko sobie.
+- 1 vs PC <br/> 
+Gra przeciwko komputerowi.
+- Multiplayer <br/> 
+Gra przeciwko sobie przez internet.
