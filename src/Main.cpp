@@ -87,6 +87,44 @@ public:
 
 		return 0;
 	}
+	int client_receive()
+	{
+		sf::IpAddress ip = sf::IpAddress::getLocalAddress();
+		sf::TcpSocket socket;
+		std::size_t received;
+		char buffer[100];
+
+		socket.connect(ip, 2000);
+
+		std::string text_test = "Test111";
+		text_test += "client";
+		socket.send(text_test.c_str(), text_test.length() + 1);
+
+		socket.receive(buffer, sizeof(buffer), received);
+		// std::cout << buffer << std::endl;
+
+		// sf::TcpListener listener;
+		// listener.listen(20000);
+		// listener.accept(socket);
+		// text_test += "server";
+		// socket.send(text_test.c_str(), text_test.length() + 1);
+
+		// t.setString(ip);
+		// window.draw(t);
+		// socket.receive(buffer, sizeof(buffer), received);
+		// std::cout << buffer << std::endl;
+		int cord_receive = 0;
+		try
+		{
+			std::string str(buffer);
+			cord_receive = std::stoi(str);
+		}
+		catch (std::invalid_argument)
+		{
+			cord_receive = 0;
+		}
+
+		return cord_receive;
 	}
 };
 
