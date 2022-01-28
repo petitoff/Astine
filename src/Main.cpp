@@ -516,4 +516,5 @@ int main()
 			window.draw(t);
 			window.display();
 		}
+		return 0;
 	}
