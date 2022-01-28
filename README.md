@@ -17,3 +17,7 @@ Gra na jednym komputerze przeciwko sobie.
 Gra przeciwko komputerowi.
 - Multiplayer <br/> 
 Gra przeciwko sobie przez internet.
+
+### Jak grać
+## Uruchamianie gry
+
