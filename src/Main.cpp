@@ -678,10 +678,6 @@ int main()
 					// 	}
 					// }
 				}
-				socket.receive(buffer, sizeof(buffer), received);
-				// std::cout << buffer << std::endl;
-
-				window.display();
 			}
 		}
 		else if (choice == 2)
@@ -690,7 +686,7 @@ int main()
 			// std::cout << "Test123123" << std::endl;
 			// std::thread th(Game.server_receive);
 			// th.join();
-			sf::Vector2f pos;
+			std::string cord_send;
 			while (window.isOpen())
 			{
 				window.clear();
