@@ -664,6 +664,19 @@ int main()
 					{
 						window.close();
 					}
+					// if (event.type == sf::Event::MouseButtonPressed)
+					// {
+					// 	if (event.mouseButton.button == sf::Mouse::Button::Left)
+					// 	{
+					// 		Game.keyPress(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+					// 		int pixelPosX = sf::Mouse::getPosition(window).x;
+					// 		int pixelPosY = sf::Mouse::getPosition(window).y;
+
+					// 		int pieces = Game.check_pieces(pixelPosX, pixelPosY);
+					// 		std::cout << pieces;
+					// 		cord_send = std::to_string(pieces);
+					// 	}
+					// }
 				}
 				socket.receive(buffer, sizeof(buffer), received);
 				// std::cout << buffer << std::endl;
