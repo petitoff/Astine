@@ -60,6 +60,10 @@ public:
 
 	void keyPress(sf::Vector2f pos);
 	void keyPress_PC(sf::Vector2f pos);
+	void keyPress_MP(sf::Vector2f pos);
+	void keyPress_MP_1(sf::Vector2f pos);
+	void keyPress_MP_2(int cor, sf::Vector2f pos);
+	void keyPress_MP_2_1(int cor, sf::Vector2f pos);
 	int check_pieces(int x, int y);
 	// void server();
 	// void server_receive();
@@ -76,18 +80,28 @@ public:
 		listener.listen(2000);
 		listener.accept(socket);
 		// std::cout << received << std::endl;
+		socket.send(cord.c_str(), cord.length() + 1);
 		socket.receive(buffer, sizeof(buffer), received);
 		// std::this_thread::sleep_for(std::chrono::seconds(1));
-
-		socket.send(cord.c_str(), cord.length() + 1);
 
 		// t.setString(ip);
 		// window.draw(t);
 		// socket.receive(buffer, sizeof(buffer), received);
 
-		return 0;
+		int cord_receive = 0;
+		try
+		{
+			std::string str(buffer);
+			cord_receive = std::stoi(str);
+		}
+		catch (std::invalid_argument)
+		{
+			cord_receive = 0;
+		}
+
+		return cord_receive;
 	}
-	int client_receive()
+	int client_receive(std::string cord)
 	{
 		sf::IpAddress ip = sf::IpAddress::getLocalAddress();
 		sf::TcpSocket socket;
@@ -98,7 +112,7 @@ public:
 
 		std::string text_test = "Test111";
 		text_test += "client";
-		socket.send(text_test.c_str(), text_test.length() + 1);
+		socket.send(cord.c_str(), cord.length() + 1);
 
 		socket.receive(buffer, sizeof(buffer), received);
 		// std::cout << buffer << std::endl;
@@ -380,6 +394,180 @@ void TicTacToe::keyPress_PC(sf::Vector2f pos)
 	if (this->reset.getGlobalBounds().contains(pos))
 		this->loadBoard(this->cur == 1 ? 2 : 1);
 }
+void TicTacToe::keyPress_MP(sf::Vector2f pos)
+{
+	if (!this->waitForReset)
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			if (this->pieces[i].getGlobalBounds().contains(pos))
+			{
+				if (this->set[i] == 0)
+				{
+					this->cur = 1;
+					this->pieces[i].setTexture(this->cur == 1 ? this->cross : this->circle);
+					this->set[i] = this->cur;
+
+					if (this->checkWin(i))
+					{
+						this->waitForReset = true;
+						this->msg = this->cur == 1 ? "Gracz X wygrywa!" : "Gracz O wygrywa!";
+						this->text.setString(this->msg);
+					}
+					else
+					{
+						if (this->checkDraw())
+						{
+							this->waitForReset = true;
+							this->msg = "Remis!";
+							this->text.setString(this->msg);
+						}
+						else
+						{
+							this->cur = this->cur == 1 ? 2 : 1;
+							this->msg = this->cur == 1 ? "Gracz X" : "Gracz O";
+							this->text.setString(this->msg);
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+	if (this->reset.getGlobalBounds().contains(pos))
+		this->loadBoard(this->cur == 1 ? 2 : 1);
+}
+void TicTacToe::keyPress_MP_1(sf::Vector2f pos)
+{
+	if (!this->waitForReset)
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			if (this->pieces[i].getGlobalBounds().contains(pos))
+			{
+				if (this->set[i] == 0)
+				{
+					this->cur = 2;
+					this->pieces[i].setTexture(this->cur == 1 ? this->cross : this->circle);
+					this->set[i] = this->cur;
+
+					if (this->checkWin(i))
+					{
+						this->waitForReset = true;
+						this->msg = this->cur == 1 ? "Gracz X wygrywa!" : "Gracz O wygrywa!";
+						this->text.setString(this->msg);
+					}
+					else
+					{
+						if (this->checkDraw())
+						{
+							this->waitForReset = true;
+							this->msg = "Remis!";
+							this->text.setString(this->msg);
+						}
+						else
+						{
+							this->cur = this->cur == 1 ? 2 : 1;
+							this->msg = this->cur == 1 ? "Gracz X" : "Gracz O";
+							this->text.setString(this->msg);
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+	if (this->reset.getGlobalBounds().contains(pos))
+		this->loadBoard(this->cur == 1 ? 2 : 1);
+}
+void TicTacToe::keyPress_MP_2(int cor, sf::Vector2f pos)
+{
+	cor -= 1;
+	if (!this->waitForReset)
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			if (i == cor)
+			{
+				if (this->set[i] == 0)
+				{
+					this->cur = 1;
+					this->pieces[i].setTexture(this->cur == 1 ? this->cross : this->circle);
+					this->set[i] = this->cur;
+
+					if (this->checkWin(i))
+					{
+						this->waitForReset = true;
+						this->msg = this->cur == 1 ? "Gracz X wygrywa!" : "Gracz O wygrywa!";
+						this->text.setString(this->msg);
+					}
+					else
+					{
+						if (this->checkDraw())
+						{
+							this->waitForReset = true;
+							this->msg = "Remis!";
+							this->text.setString(this->msg);
+						}
+						else
+						{
+							this->cur = this->cur == 1 ? 2 : 1;
+							this->msg = this->cur == 1 ? "Gracz X" : "Gracz O";
+							this->text.setString(this->msg);
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+	if (this->reset.getGlobalBounds().contains(pos))
+		this->loadBoard(this->cur == 1 ? 2 : 1);
+}
+void TicTacToe::keyPress_MP_2_1(int cor, sf::Vector2f pos)
+{
+	cor -= 1;
+	if (!this->waitForReset)
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			if (i == cor)
+			{
+				if (this->set[i] == 0)
+				{
+					this->cur = 2;
+					this->pieces[i].setTexture(this->cur == 1 ? this->cross : this->circle);
+					this->set[i] = this->cur;
+
+					if (this->checkWin(i))
+					{
+						this->waitForReset = true;
+						this->msg = this->cur == 1 ? "Gracz X wygrywa!" : "Gracz O wygrywa!";
+						this->text.setString(this->msg);
+					}
+					else
+					{
+						if (this->checkDraw())
+						{
+							this->waitForReset = true;
+							this->msg = "Remis!";
+							this->text.setString(this->msg);
+						}
+						else
+						{
+							this->cur = this->cur == 1 ? 2 : 1;
+							this->msg = this->cur == 1 ? "Gracz X" : "Gracz O";
+							this->text.setString(this->msg);
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+	if (this->reset.getGlobalBounds().contains(pos))
+		this->loadBoard(this->cur == 1 ? 2 : 1);
+}
 
 int TicTacToe::check_pieces(int x, int y)
 {
@@ -653,40 +841,45 @@ int main()
 				// window.draw(t);
 				// socket.receive(buffer, sizeof(buffer), received);
 				// std::cout << buffer << std::endl;
-				user_server = Game.client_receive();
-				std::cout << user_server << std::endl;
+				user_server = Game.client_receive(cord_send);
+				// std::cout << user_server << std::endl;
+				if (user_server != 0)
+				{
+					Game.keyPress_MP_2(user_server, window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+				}
 
 				sf::Event event;
 				while (window.pollEvent(event))
 				{
-					Game.client_receive();
 					if (event.type == sf::Event::Closed)
 					{
 						window.close();
 					}
-					// if (event.type == sf::Event::MouseButtonPressed)
-					// {
-					// 	if (event.mouseButton.button == sf::Mouse::Button::Left)
-					// 	{
-					// 		Game.keyPress(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
-					// 		int pixelPosX = sf::Mouse::getPosition(window).x;
-					// 		int pixelPosY = sf::Mouse::getPosition(window).y;
+					if (event.type == sf::Event::MouseButtonPressed)
+					{
+						if (event.mouseButton.button == sf::Mouse::Button::Left)
+						{
+							Game.keyPress_MP_1(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+							int pixelPosX = sf::Mouse::getPosition(window).x;
+							int pixelPosY = sf::Mouse::getPosition(window).y;
 
-					// 		int pieces = Game.check_pieces(pixelPosX, pixelPosY);
-					// 		std::cout << pieces;
-					// 		cord_send = std::to_string(pieces);
-					// 	}
-					// }
+							int pieces = Game.check_pieces(pixelPosX, pixelPosY);
+							// std::cout << pieces;
+							cord_send = std::to_string(pieces);
+						}
+					}
 				}
 			}
 		}
 		else if (choice == 2)
 		{
-			// serwer
+			// server
 			// std::cout << "Test123123" << std::endl;
 			// std::thread th(Game.server_receive);
 			// th.join();
+
 			std::string cord_send;
+			int user_client { 0 };
 			while (window.isOpen())
 			{
 				window.clear();
@@ -712,6 +905,13 @@ int main()
 				// socket.receive(buffer, sizeof(buffer), received);
 				// std::cout << buffer << std::endl;
 
+				user_client = Game.server_receive(cord_send);
+				// std::cout << user_server << std::endl;
+				if (user_client != 0)
+				{
+					Game.keyPress_MP_2_1(user_client, window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+				}
+
 				sf::Event event;
 				while (window.pollEvent(event))
 				{
@@ -723,16 +923,14 @@ int main()
 					{
 						if (event.mouseButton.button == sf::Mouse::Button::Left)
 						{
-							Game.keyPress(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+							Game.keyPress_MP(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
 							int pixelPosX = sf::Mouse::getPosition(window).x;
 							int pixelPosY = sf::Mouse::getPosition(window).y;
 
 							int pieces = Game.check_pieces(pixelPosX, pixelPosY);
-							std::cout << pieces;
 							cord_send = std::to_string(pieces);
 						}
 					}
-					Game.server_receive(cord_send);
 				}
 			}
 		}
