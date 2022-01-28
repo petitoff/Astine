@@ -381,6 +381,49 @@ void TicTacToe::keyPress_PC(sf::Vector2f pos)
 		this->loadBoard(this->cur == 1 ? 2 : 1);
 }
 
+int TicTacToe::check_pieces(int x, int y)
+{
+	// std::string pieces;
+	if (x > 0 && x < 117 && y > 100 && y < 218)
+	{
+		return 1;
+	}
+	else if (x > 142 && x < 259 && y > 100 && y < 218)
+	{
+		return 2;
+	}
+	else if (x > 283 && x < 401 && y > 100 && y < 218)
+	{
+		return 3;
+	}
+	else if (x > 0 && x < 120 && y > 242 && y < 360)
+	{
+		return 4;
+	}
+	else if (x > 144 && x < 258 && y > 242 && y < 360)
+	{
+		return 5;
+	}
+	else if (x > 284 && x < 401 && y > 242 && y < 360)
+	{
+		return 6;
+	}
+	else if (x > 0 && x < 116 && y > 383 && y < 501)
+	{
+		return 7;
+	}
+	else if (x > 142 && x < 259 && y > 383 && y < 501)
+	{
+		return 8;
+	}
+	else if (x > 284 && x < 401 && y > 383 && y < 501)
+	{
+		return 9;
+	}
+
+	return 0;
+}
+
 int main()
 {
 	TicTacToe Game;
