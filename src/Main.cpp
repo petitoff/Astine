@@ -476,6 +476,7 @@ int main()
 	{
 		// Wczytywanie gry multiplayer
 
+		int choice { 0 };
 		sf::Font font;
 		font.loadFromFile("Resources\\font.ttf");
 		sf::Text t;
