@@ -497,23 +497,13 @@ int main()
 				{
 					window.close();
 				}
-
-				if (event.type == sf::Event::TextEntered)
 				{
-					if (event.key.code == 8)
 					{
-						// backspace
-						if (!s.length() == 0)
-							s.pop_back();
 					}
-					else
 					{
-						s += (char)event.text.unicode;
 					}
 				}
 			}
-			t.setString(s);
-			window.draw(t);
 			window.display();
 			if (choice != 0)
 			{
