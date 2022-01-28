@@ -60,6 +60,27 @@ public:
 
 	void keyPress(sf::Vector2f pos);
 	void keyPress_PC(sf::Vector2f pos);
+	std::string check_pieces(int x, int y);
+	// void server();
+	// void server_receive();
+
+	static void server_receive()
+	{
+		// std::cout << "test123" << std::endl;
+		// sf::IpAddress ip = sf::IpAddress::getLocalAddress();
+		sf::TcpSocket socket;
+		// std::string text_test = "Test111";
+		std::size_t received;
+		// char connectionType, mode;
+		char buffer[100];
+		sf::TcpListener listener;
+		listener.listen(2000);
+		listener.accept(socket);
+		// std::cout << received << std::endl;
+		socket.receive(buffer, sizeof(buffer), received);
+		// std::this_thread::sleep_for(std::chrono::seconds(1));
+		// std::cout << "test";
+	}
 };
 
 bool TicTacToe::loadAssets()
