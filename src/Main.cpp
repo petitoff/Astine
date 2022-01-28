@@ -608,12 +608,12 @@ int main()
 			}
 		}
 
-		sf::IpAddress ip = sf::IpAddress::getLocalAddress();
-		sf::TcpSocket socket;
-		std::string text_test = "Test111";
-		std::size_t received;
+		// sf::IpAddress ip = sf::IpAddress::getLocalAddress();
+		// sf::TcpSocket socket;
+		// std::string text_test = "Test111";
+		// std::size_t received;
 		// char connectionType, mode;
-		char buffer[2000];
+		// char buffer[2000];
 
 		if (choice == 1)
 		{
