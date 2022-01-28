@@ -515,6 +515,106 @@ int main()
 			t.setString(s);
 			window.draw(t);
 			window.display();
+			if (choice != 0)
+			{
+				break;
+			}
+		}
+
+		sf::IpAddress ip = sf::IpAddress::getLocalAddress();
+		sf::TcpSocket socket;
+		std::string text_test = "Test111";
+		std::size_t received;
+		// char connectionType, mode;
+		char buffer[2000];
+
+		if (choice == 1)
+		{
+			//klient
+			while (window.isOpen())
+			{
+				window.clear();
+				socket.connect(ip, 2000);
+				text_test += "client";
+				socket.send(text_test.c_str(), text_test.length() + 1);
+
+				// t.setString(ip);
+				// window.draw(t);
+				sf::Event event;
+				while (window.pollEvent(event))
+				{
+					if (event.type == sf::Event::Closed)
+					{
+						window.close();
+					}
+				}
+				socket.receive(buffer, sizeof(buffer), received);
+				// std::cout << buffer << std::endl;
+
+				window.display();
+			}
+		}
+		else if (choice == 2)
+		{
+			// serwer
+			// std::cout << "Test123123" << std::endl;
+			// std::thread th(Game.server_receive);
+			// th.join();
+			sf::Vector2f pos;
+			while (window.isOpen())
+			{
+				window.clear();
+
+				window.draw(Game.background);
+				window.draw(Game.board);
+				window.draw(Game.text);
+				window.draw(Game.reset);
+
+				for (int i = 0; i < 9; i++)
+					window.draw(Game.pieces[i]);
+
+				window.display();
+
+				// sf::TcpListener listener;
+				// listener.listen(20000);
+				// listener.accept(socket);
+				// text_test += "server";
+				// socket.send(text_test.c_str(), text_test.length() + 1);
+
+				// t.setString(ip);
+				// window.draw(t);
+				// socket.receive(buffer, sizeof(buffer), received);
+				// std::cout << buffer << std::endl;
+
+				sf::Event event;
+				while (window.pollEvent(event))
+				{
+					if (event.type == sf::Event::Closed)
+					{
+						window.close();
+					}
+					if (event.type == sf::Event::MouseButtonPressed)
+					{
+						if (event.mouseButton.button == sf::Mouse::Button::Left)
+						{
+							Game.keyPress(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+							int pixelPosX = sf::Mouse::getPosition(window).x;
+							int pixelPosY = sf::Mouse::getPosition(window).y;
+
+							std::string pieces = Game.check_pieces(x, y);
+							// 	std::string send_cord_1;
+							// 	std::string send_cord;
+
+							// 	send_cord_1 = std::to_string(pixelPosX);
+							// 	send_cord = send_cord_1;
+							// 	send_cord_1 = std::to_string(pixelPosY);
+							// 	send_cord += "x" + send_cord_1;
+							// }
+						}
+					}
+					// Game.server_receive(pos);
+				}
+			}
 		}
 		return 0;
 	}
