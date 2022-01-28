@@ -497,10 +497,18 @@ int main()
 				{
 					window.close();
 				}
+				if (event.type == sf::Event::MouseButtonPressed)
 				{
+					int pixelPosX = sf::Mouse::getPosition(window).x;
+					int pixelPosY = sf::Mouse::getPosition(window).y;
+
+					if (pixelPosX > 54 && pixelPosX < 180 && pixelPosY > 263 && pixelPosY < 335)
 					{
+						choice = 1;
 					}
+					else if (pixelPosX > 227 && pixelPosX < 357 && pixelPosY > 263 && pixelPosY < 339)
 					{
+						choice = 2;
 					}
 				}
 			}
