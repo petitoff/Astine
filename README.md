@@ -17,13 +17,28 @@ Wykorzystująca bibliotekę:
 ### Funkcje
 
 Gra posiada trzy funkcje rozgrywki.
+  
+## Główne założenia
+Głównymi założeniami przy budowie projekty były:
+### Prosty interfejs
+### Posiadanie trzech trybów gry
+* Gra na jednym komputerze z drugą osobą (tzw. 1vs1).
+* Gra przeciwko komputerowi.
+* Gra przez Internet z drugą osobą.
 
-- 1 vs 1 <br/>
-  Gra na jednym komputerze przeciwko sobie.
-- 1 vs PC <br/>
-  Gra przeciwko komputerowi.
-- Multiplayer <br/>
-  Gra przeciwko sobie przez internet.
+## Aktualny stan gry
+### Menu
+Gra posiada w pełni sprawne menu dzięki któremu można wybrać tryb gry.
+### Logika gry
+Została opracowana oraz zaimplementowana logika gry dzięki której gra analizuje czy ktoś nie wygrał bądź nie doszło do remisu.
+### 1 vs 1
+Tryb został zaimplementowany w grze oraz jest w pełni funkcjonalny.
+
+### 1 vs pc
+Aktualnie gra posiada bardzo uproszczony tryb ponieważ w pierwotnej wersji gra korzystała ze starszej biblioteki jednak nie umożliwiała ona wielu funkcji. Musieliśmy więc zbudować grę od początku przez co musimy jeszcze popracować nad logiką komputera.
+
+### Multiplayer
+Gra sieciowa działa w stopniu dobrym. Posiada kilka problemów czy braków w optymalizacji ale samo założenie posiadania tryby multiplayer zostało spełnione.
 
 # Jak grać
 
@@ -31,7 +46,7 @@ Gra posiada trzy funkcje rozgrywki.
 
 ### Sposób 1
 
-- pobrać plik z github: [Astine.7z](https://github.com/petitoff/Astine/tree/main/Astine)
+- pobrać plik z GitHub: [Astine.7z](https://github.com/petitoff/Astine/tree/main/Astine)
 - rozpakować programem 7zip
 - uruchomić plik .exe
 
