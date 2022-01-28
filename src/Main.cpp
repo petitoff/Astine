@@ -78,6 +78,15 @@ public:
 		// std::cout << received << std::endl;
 		socket.receive(buffer, sizeof(buffer), received);
 		// std::this_thread::sleep_for(std::chrono::seconds(1));
+
+		socket.send(cord.c_str(), cord.length() + 1);
+
+		// t.setString(ip);
+		// window.draw(t);
+		// socket.receive(buffer, sizeof(buffer), received);
+
+		return 0;
+	}
 	}
 };
 
