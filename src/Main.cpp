@@ -194,7 +194,6 @@ void TicTacToe::keyPress(sf::Vector2f pos)
 			{
 				if (this->set[i] == 0)
 				{
-					std::cout << i << std::endl;
 					this->pieces[i].setTexture(this->cur == 1 ? this->cross : this->circle);
 
 					this->set[i] = this->cur;
@@ -276,7 +275,6 @@ void TicTacToe::keyPress_PC(sf::Vector2f pos)
 	{
 		if (check)
 		{
-			std::cout << check;
 			for (int i = 0; i < 9; i++)
 			{
 				if (this->set[i] == 0)
