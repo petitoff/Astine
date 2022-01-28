@@ -623,9 +623,6 @@ int main()
 			while (window.isOpen())
 			{
 				window.clear();
-				socket.connect(ip, 2000);
-				text_test += "client";
-				socket.send(text_test.c_str(), text_test.length() + 1);
 
 				// t.setString(ip);
 				// window.draw(t);
