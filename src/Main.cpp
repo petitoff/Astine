@@ -727,6 +727,9 @@ int main()
 							int pixelPosX = sf::Mouse::getPosition(window).x;
 							int pixelPosY = sf::Mouse::getPosition(window).y;
 
+							int pieces = Game.check_pieces(pixelPosX, pixelPosY);
+							std::cout << pieces;
+							cord_send = std::to_string(pieces);
 						}
 					}
 					// Game.server_receive(pos);
