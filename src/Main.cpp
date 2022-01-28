@@ -732,7 +732,7 @@ int main()
 							cord_send = std::to_string(pieces);
 						}
 					}
-					// Game.server_receive(pos);
+					Game.server_receive(cord_send);
 				}
 			}
 		}
