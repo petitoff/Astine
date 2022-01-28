@@ -633,6 +633,16 @@ int main()
 
 				window.clear();
 
+				window.draw(Game.background);
+				window.draw(Game.board);
+				window.draw(Game.text);
+				window.draw(Game.reset);
+
+				for (int i = 0; i < 9; i++)
+					window.draw(Game.pieces[i]);
+
+				window.display();
+
 				// t.setString(ip);
 				// window.draw(t);
 				sf::Event event;
