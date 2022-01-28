@@ -489,7 +489,7 @@ int main()
 			window.draw(Game.server_menu_1);
 			//window.draw(Game.background);
 
-			std::string input_text;
+			// std::string input_text;
 			sf::Event event;
 			while (window.pollEvent(event))
 			{
