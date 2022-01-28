@@ -622,6 +622,15 @@ int main()
 			int user_server { 0 };
 			while (window.isOpen())
 			{
+				// socket.connect(ip, 2000);
+				// text_test += "client";
+				// socket.send(text_test.c_str(), text_test.length() + 1);
+
+				// // t.setString(ip);
+				// // window.draw(t);
+				// socket.receive(buffer, sizeof(buffer), received);
+				// // std::cout << buffer << std::endl;
+
 				window.clear();
 
 				// t.setString(ip);
