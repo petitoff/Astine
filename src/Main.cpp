@@ -643,8 +643,16 @@ int main()
 
 				window.display();
 
+				// sf::TcpListener listener;
+				// listener.listen(20000);
+				// listener.accept(socket);
+				// text_test += "server";
+				// socket.send(text_test.c_str(), text_test.length() + 1);
+
 				// t.setString(ip);
 				// window.draw(t);
+				// socket.receive(buffer, sizeof(buffer), received);
+				// std::cout << buffer << std::endl;
 				sf::Event event;
 				while (window.pollEvent(event))
 				{
