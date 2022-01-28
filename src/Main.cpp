@@ -29,8 +29,11 @@ private:
 	sf::Texture blank;
 	sf::Font font;
 
-	// 1 vs pc
+	// server
+	sf::Image server_menu_i;
+	sf::Texture server_menu_t;
 
+	// Inne
 	std::string msg;
 	int cur;
 	bool waitForReset;
@@ -40,6 +43,7 @@ private:
 
 public:
 	sf::Sprite background_menu;
+	sf::Sprite server_menu_1;
 
 	sf::Sprite background;
 	sf::Sprite board;
@@ -53,7 +57,7 @@ public:
 	bool loadBoard(int startPlayer);
 
 	void keyPress(sf::Vector2f pos);
-	void keyPress_PC();
+	void keyPress_PC(sf::Vector2f pos);
 };
 
 bool TicTacToe::loadAssets()
@@ -103,6 +107,19 @@ bool TicTacToe::loadAssets()
 
 	if (!this->font.loadFromFile("Resources\\font.ttf"))
 		return false;
+
+	// server
+	if (!this->server_menu_i.loadFromFile("Resources\\klient_serwer.png"))
+		return false;
+	if (!this->server_menu_t.loadFromImage(this->server_menu_i))
+		this->reset.setTexture(this->reset_t);
+
+	if (!this->server_menu_i.loadFromFile("Resources\\klient_serwer.png"))
+		return false;
+	if (!this->server_menu_t.loadFromImage(this->server_menu_i))
+		return false;
+	this->server_menu_1.setTexture(this->server_menu_t);
+
 	this->text.setFont(this->font);
 	this->text.setCharacterSize(40);
 	text.setFillColor(sf::Color::Black);
@@ -175,6 +192,7 @@ void TicTacToe::keyPress(sf::Vector2f pos)
 			{
 				if (this->set[i] == 0)
 				{
+					std::cout << i << std::endl;
 					this->pieces[i].setTexture(this->cur == 1 ? this->cross : this->circle);
 
 					this->set[i] = this->cur;
@@ -209,9 +227,92 @@ void TicTacToe::keyPress(sf::Vector2f pos)
 	if (this->reset.getGlobalBounds().contains(pos))
 		this->loadBoard(this->cur == 1 ? 2 : 1);
 }
-void TicTacToe::keyPress_PC()
+void TicTacToe::keyPress_PC(sf::Vector2f pos)
 {
-	this->pieces[0].setTexture(this->cur == 1 ? this->cross : this->circle);
+	bool check = false;
+	if (!this->waitForReset)
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			if (this->pieces[i].getGlobalBounds().contains(pos))
+			{
+				if (this->set[i] == 0)
+				{
+					check = true;
+					this->cur = 1;
+					this->pieces[i].setTexture(this->cur == 1 ? this->cross : this->circle);
+					this->set[i] = this->cur;
+
+					if (this->checkWin(i))
+					{
+						this->waitForReset = true;
+						this->msg = this->cur == 1 ? "Gracz X wygrywa!" : "Gracz O wygrywa!";
+						this->text.setString(this->msg);
+					}
+					else
+					{
+						if (this->checkDraw())
+						{
+							this->waitForReset = true;
+							this->msg = "Remis!";
+							this->text.setString(this->msg);
+						}
+						else
+						{
+							this->cur = this->cur == 1 ? 2 : 1;
+							this->msg = this->cur == 1 ? "Gracz X" : "Gracz O";
+							this->text.setString(this->msg);
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	if (!this->waitForReset)
+	{
+		if (check)
+		{
+			std::cout << check;
+			for (int i = 0; i < 9; i++)
+			{
+				if (this->set[i] == 0)
+				{
+					this->cur = 2;
+					this->pieces[i].setTexture(this->cur == 1 ? this->cross : this->circle);
+					this->set[i] = this->cur;
+					//if (!this->set[1] == 0)
+
+					if (this->checkWin(i))
+					{
+						this->waitForReset = true;
+						this->msg = this->cur == 1 ? "Gracz X wygrywa!" : "Gracz O wygrywa!";
+						this->text.setString(this->msg);
+					}
+					else
+					{
+						if (this->checkDraw())
+						{
+							this->waitForReset = true;
+							this->msg = "Remis!";
+							this->text.setString(this->msg);
+						}
+						else
+						{
+							this->cur = this->cur == 1 ? 2 : 1;
+							this->msg = this->cur == 1 ? "Gracz X" : "Gracz O";
+							this->text.setString(this->msg);
+						}
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	if (this->reset.getGlobalBounds().contains(pos))
+		this->loadBoard(this->cur == 1 ? 2 : 1);
 }
 
 int main()
@@ -342,12 +443,58 @@ int main()
 				if (event.type == sf::Event::MouseButtonPressed)
 				{
 					if (event.mouseButton.button == sf::Mouse::Button::Left)
-						Game.keyPress(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
-					Game.keyPress_PC();
+					{
+						// Game.keyPress(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+						Game.keyPress_PC(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+					}
 				}
 			}
 		}
 	}
+	else if (choice == 3)
+	{
+		// Wczytywanie gry multiplayer
 
+		sf::Font font;
+		font.loadFromFile("Resources\\font.ttf");
+		sf::Text t;
+		t.setFillColor(sf::Color::White);
+		t.setFont(font);
+		std::string s;
+
+		while (window.isOpen())
+		{
+			window.clear();
+			window.draw(Game.server_menu_1);
+			//window.draw(Game.background);
+
+			std::string input_text;
+			sf::Event event;
+			while (window.pollEvent(event))
+			{
+				if (event.type == sf::Event::Closed)
+				{
+					window.close();
+				}
+
+				if (event.type == sf::Event::TextEntered)
+				{
+					if (event.key.code == 8)
+					{
+						// backspace
+						if (!s.length() == 0)
+							s.pop_back();
+					}
+					else
+					{
+						s += (char)event.text.unicode;
+					}
+				}
+			}
+			t.setString(s);
+			window.draw(t);
+			window.display();
+		}
+	}
 	return 0;
 }
