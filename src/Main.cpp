@@ -60,13 +60,12 @@ public:
 
 	void keyPress(sf::Vector2f pos);
 	void keyPress_PC(sf::Vector2f pos);
-	std::string check_pieces(int x, int y);
+	int check_pieces(int x, int y);
 	// void server();
 	// void server_receive();
 
-	static void server_receive()
+	int server_receive(std::string cord)
 	{
-		// std::cout << "test123" << std::endl;
 		// sf::IpAddress ip = sf::IpAddress::getLocalAddress();
 		sf::TcpSocket socket;
 		// std::string text_test = "Test111";
@@ -79,7 +78,6 @@ public:
 		// std::cout << received << std::endl;
 		socket.receive(buffer, sizeof(buffer), received);
 		// std::this_thread::sleep_for(std::chrono::seconds(1));
-		// std::cout << "test";
 	}
 };
 
