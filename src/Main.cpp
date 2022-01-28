@@ -653,6 +653,7 @@ int main()
 				// window.draw(t);
 				// socket.receive(buffer, sizeof(buffer), received);
 				// std::cout << buffer << std::endl;
+				user_server = Game.client_receive();
 				sf::Event event;
 				while (window.pollEvent(event))
 				{
