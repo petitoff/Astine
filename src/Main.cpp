@@ -659,6 +659,7 @@ int main()
 				sf::Event event;
 				while (window.pollEvent(event))
 				{
+					Game.client_receive();
 					if (event.type == sf::Event::Closed)
 					{
 						window.close();
