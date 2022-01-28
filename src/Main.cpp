@@ -618,6 +618,8 @@ int main()
 		if (choice == 1)
 		{
 			//klient
+			std::string cord_send;
+			int user_server { 0 };
 			while (window.isOpen())
 			{
 				window.clear();
