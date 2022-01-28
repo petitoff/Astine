@@ -6,6 +6,8 @@
 
 #include <WinUser.h>
 #include <Windows.h>
+#include <chrono>
+#include <thread>
 
 class TicTacToe
 {
