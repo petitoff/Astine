@@ -867,13 +867,13 @@ int main()
 							break_1 = true;
 							break;
 						}
-						// else if (event.key.code == 8)
-						// {
-						// 	playerInputstd::string::pop_back();
-						// 	continue;
-						// }
+						else if (event.key.code == 8 && playerInput.length() > 0)
+						{
+							playerInput.std::string::pop_back();
+						}
+						else
+							playerInput += event.text.unicode;
 
-						playerInput += event.text.unicode;
 						playerText.setString(playerInput);
 					}
 				}
