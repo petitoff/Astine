@@ -7,6 +7,8 @@
 #include <WinUser.h>
 #include <Windows.h>
 #include <chrono>
+#include <fstream>
+#include <future>
 #include <thread>
 
 class TicTacToe
@@ -68,6 +70,14 @@ public:
 	// void server();
 	// void server_receive();
 
+	int thread_server(std::string cord)
+	{
+		auto f1 = std::async(&TicTacToe::server_receive, this, cord);
+		auto res1 = f1.get();
+
+		return res1;
+	}
+
 	int server_receive(std::string cord)
 	{
 		// sf::IpAddress ip = sf::IpAddress::getLocalAddress();
@@ -78,11 +88,17 @@ public:
 		char buffer[100];
 		sf::TcpListener listener;
 		listener.listen(2000);
-		listener.accept(socket);
+
+		sf::Packet packet;
+		socket.receive(packet);
+		std::cout << packet.getDataSize() << std::endl;
+
 		// std::cout << received << std::endl;
+		listener.accept(socket);
+		std::cout << received << std::endl;
+
 		socket.send(cord.c_str(), cord.length() + 1);
 		socket.receive(buffer, sizeof(buffer), received);
-		// std::this_thread::sleep_for(std::chrono::seconds(1));
 
 		// t.setString(ip);
 		// window.draw(t);
@@ -101,20 +117,25 @@ public:
 
 		return cord_receive;
 	}
-	int client_receive(std::string cord)
+	int client_receive(std::string cord, sf::IpAddress ips)
 	{
-		sf::IpAddress ip = sf::IpAddress::getLocalAddress();
+		sf::IpAddress ip = ips;
 		sf::TcpSocket socket;
 		std::size_t received;
 		char buffer[100];
 
+		sf::Packet packet;
+		std::string s("0", 2048);
+
+		packet << s;
+
 		socket.connect(ip, 2000);
 
-		std::string text_test = "Test111";
-		text_test += "client";
 		socket.send(cord.c_str(), cord.length() + 1);
 
 		socket.receive(buffer, sizeof(buffer), received);
+
+		socket.send(packet);
 		// std::cout << buffer << std::endl;
 
 		// sf::TcpListener listener;
@@ -795,32 +816,95 @@ int main()
 				break;
 			}
 		}
-
-		// sf::IpAddress ip = sf::IpAddress::getLocalAddress();
-		// sf::TcpSocket socket;
-		// std::string text_test = "Test111";
-		// std::size_t received;
-		// char connectionType, mode;
-		// char buffer[2000];
-
 		if (choice == 1)
 		{
 			//klient
+
+			sf::String Text;
+			//sf::Font font;
+			sf::Text text;
+			sf::IpAddress ip = sf::IpAddress::getLocalAddress();
+
+			// select the font
+			text.setFont(font); // font is a sf::Font
+
+			std::string str; // a variable of str data type
+
+			// using the stringstream class to insert an int and
+			// extract a string
+			std::stringstream ss;
+			ss << ip;
+			ss >> str;
+
+			std::string output_1 = "Twoje ip: " + str;
+			text.setString(output_1);
+
+			// set the character size
+			text.setCharacterSize(15); // in pixels, not points!
+
+			// set the color
+			text.setFillColor(sf::Color::Red);
+
+			// sf::FloatRect textRect = text.getLocalBounds();
+			// const int SCRWIDTH = 800;
+			// const int SCRHEIGHT = 600;
+			// text.setOrigin(textRect.width / 2, textRect.height / 2);
+			// text.setPosition(sf::Vector2f(SCRWIDTH / 2.0f, SCRHEIGHT / 2.0f));
+
+			std::string playerInput;
+			sf::Text playerText;
+			playerText.setFont(font);
+
+			// set the character size
+			playerText.setCharacterSize(15);
+
+			// set the color
+			playerText.setFillColor(sf::Color::Red);
+			//font.loadFromFile("Resources\\font.ttf");
+			playerText.setString("Wprowadz ip: ");
+
 			std::string cord_send;
 			int user_server { 0 };
+			bool break_1 = false;
+
 			while (window.isOpen())
 			{
-				// socket.connect(ip, 2000);
-				// text_test += "client";
-				// socket.send(text_test.c_str(), text_test.length() + 1);
+				window.clear();
+				window.draw(playerText);
+				window.display();
 
-				// // t.setString(ip);
-				// // window.draw(t);
-				// socket.receive(buffer, sizeof(buffer), received);
-				// // std::cout << buffer << std::endl;
+				sf::Event event;
+				while (window.pollEvent(event))
+				{
+					if (event.type == sf::Event::Closed)
+					{
+						window.close();
+					}
+					if (event.type == sf::Event::TextEntered)
+					{
+						if (event.key.code == 13)
+						{
+							break_1 = true;
+							break;
+						}
+						else if (event.key.code == 8 && playerInput.length() > 0)
+						{
+							playerInput.std::string::pop_back();
+						}
+						else
+							playerInput += event.text.unicode;
+
+						playerText.setString(playerInput);
+					}
+				}
+				if (break_1)
+					break;
+			}
+
+			while (window.isOpen())
+			{
 
 				window.clear();
-
 				window.draw(Game.background);
 				window.draw(Game.board);
 				window.draw(Game.text);
@@ -829,25 +913,17 @@ int main()
 				for (int i = 0; i < 9; i++)
 					window.draw(Game.pieces[i]);
 
+				// window.draw(playerText);
 				window.display();
 
-				// sf::TcpListener listener;
-				// listener.listen(20000);
-				// listener.accept(socket);
-				// text_test += "server";
-				// socket.send(text_test.c_str(), text_test.length() + 1);
-
-				// t.setString(ip);
-				// window.draw(t);
-				// socket.receive(buffer, sizeof(buffer), received);
-				// std::cout << buffer << std::endl;
-				user_server = Game.client_receive(cord_send);
+				user_server = Game.client_receive(cord_send, playerInput);
 				// std::cout << user_server << std::endl;
 				if (user_server != 0)
 				{
 					Game.keyPress_MP_2(user_server, window.mapPixelToCoords(sf::Mouse::getPosition(window)));
 				}
 
+				cord_send = "0";
 				sf::Event event;
 				while (window.pollEvent(event))
 				{
@@ -873,13 +949,35 @@ int main()
 		}
 		else if (choice == 2)
 		{
-			// server
-			// std::cout << "Test123123" << std::endl;
-			// std::thread th(Game.server_receive);
-			// th.join();
+			sf::String Text;
+			sf::Text text;
+			sf::IpAddress ip = sf::IpAddress::getLocalAddress();
 
+			// select the font
+			text.setFont(font); // font is a sf::Font
+
+			std::string str; // a variable of str data type
+
+			// using the stringstream class to insert an int and
+			// extract a string
+			std::stringstream ss;
+			ss << ip;
+			ss >> str;
+
+			std::string output_1 = "Twoje ip: " + str;
+			text.setString(output_1);
+
+			// set the character size
+			text.setCharacterSize(15); // in pixels, not points!
+
+			// set the color
+			text.setFillColor(sf::Color::Red);
 			std::string cord_send;
 			int user_client { 0 };
+
+			// std::thread th1(&TicTacToe::server_receive);
+			// th1.detach();
+
 			while (window.isOpen())
 			{
 				window.clear();
@@ -892,26 +990,24 @@ int main()
 				for (int i = 0; i < 9; i++)
 					window.draw(Game.pieces[i]);
 
+				window.draw(text);
 				window.display();
 
-				// sf::TcpListener listener;
-				// listener.listen(20000);
-				// listener.accept(socket);
-				// text_test += "server";
-				// socket.send(text_test.c_str(), text_test.length() + 1);
+				// auto future = std::async(&TicTacToe::server_receive, cord_send);
+				// user_client = future.get();
 
-				// t.setString(ip);
-				// window.draw(t);
-				// socket.receive(buffer, sizeof(buffer), received);
-				// std::cout << buffer << std::endl;
-
-				user_client = Game.server_receive(cord_send);
+				// user_client = Game.server_receive(cord_send);
 				// std::cout << user_server << std::endl;
+
+				user_client = Game.thread_server(cord_send);
+				// std::thread worker_thread(&TicTacToe::thread_server, &Game, cord_send);
+
 				if (user_client != 0)
 				{
 					Game.keyPress_MP_2_1(user_client, window.mapPixelToCoords(sf::Mouse::getPosition(window)));
 				}
 
+				cord_send = "0";
 				sf::Event event;
 				while (window.pollEvent(event))
 				{
