@@ -8,6 +8,7 @@
 #include <Windows.h>
 #include <chrono>
 #include <fstream>
+#include <future>
 #include <thread>
 
 class TicTacToe
@@ -68,6 +69,14 @@ public:
 	int check_pieces(int x, int y);
 	// void server();
 	// void server_receive();
+
+	int thread_server(std::string cord)
+	{
+		auto f1 = std::async(&TicTacToe::server_receive, this, cord);
+		auto res1 = f1.get();
+
+		return res1;
+	}
 
 	int server_receive(std::string cord)
 	{
@@ -903,6 +912,7 @@ int main()
 					Game.keyPress_MP_2(user_server, window.mapPixelToCoords(sf::Mouse::getPosition(window)));
 				}
 
+				cord_send = "0";
 				sf::Event event;
 				while (window.pollEvent(event))
 				{
@@ -953,6 +963,10 @@ int main()
 			text.setFillColor(sf::Color::Red);
 			std::string cord_send;
 			int user_client { 0 };
+
+			// std::thread th1(&TicTacToe::server_receive);
+			// th1.detach();
+
 			while (window.isOpen())
 			{
 				window.clear();
@@ -967,13 +981,22 @@ int main()
 
 				window.draw(text);
 				window.display();
-				user_client = Game.server_receive(cord_send);
+
+				// auto future = std::async(&TicTacToe::server_receive, cord_send);
+				// user_client = future.get();
+
+				// user_client = Game.server_receive(cord_send);
 				// std::cout << user_server << std::endl;
+
+				user_client = Game.thread_server(cord_send);
+				// std::thread worker_thread(&TicTacToe::thread_server, &Game, cord_send);
+
 				if (user_client != 0)
 				{
 					Game.keyPress_MP_2_1(user_client, window.mapPixelToCoords(sf::Mouse::getPosition(window)));
 				}
 
+				cord_send = "0";
 				sf::Event event;
 				while (window.pollEvent(event))
 				{
