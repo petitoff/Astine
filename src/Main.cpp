@@ -88,11 +88,17 @@ public:
 		char buffer[100];
 		sf::TcpListener listener;
 		listener.listen(2000);
-		listener.accept(socket);
+
+		sf::Packet packet;
+		socket.receive(packet);
+		std::cout << packet.getDataSize() << std::endl;
+
 		// std::cout << received << std::endl;
+		listener.accept(socket);
+		std::cout << received << std::endl;
+
 		socket.send(cord.c_str(), cord.length() + 1);
 		socket.receive(buffer, sizeof(buffer), received);
-		// std::this_thread::sleep_for(std::chrono::seconds(1));
 
 		// t.setString(ip);
 		// window.draw(t);
@@ -118,13 +124,18 @@ public:
 		std::size_t received;
 		char buffer[100];
 
+		sf::Packet packet;
+		std::string s("0", 2048);
+
+		packet << s;
+
 		socket.connect(ip, 2000);
 
-		std::string text_test = "Test111";
-		text_test += "client";
 		socket.send(cord.c_str(), cord.length() + 1);
 
 		socket.receive(buffer, sizeof(buffer), received);
+
+		socket.send(packet);
 		// std::cout << buffer << std::endl;
 
 		// sf::TcpListener listener;
